@@ -1,0 +1,9 @@
+# Virtual environment
+weather-airflow
+
+__pycache__/
+config/
+logs/
+plugins/
+.env
+

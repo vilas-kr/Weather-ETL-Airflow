@@ -51,37 +51,44 @@ git clone https://github.com/yourusername/Weather-ETL-Airflow.git
 cd Weather-ETL-Airflow
 ```
 
-### Step 2: Set Up Environment Variables
+### Step 2: Create needed directories
+```bash
+mkdir -p logs
+mkdir -p plugins
+mkdir -p config
+```
+
+### Step 3: Set Up Environment Variables
 Create a `.env` file in the project root with the following content:
 ```
 echo AIRFLOW_UID=50000 > .env
 ```
-### Step 3: Create virtual environment (optional but recommended)
+### Step 4: Create virtual environment (optional but recommended)
 ```bash
 python -m venv venv
 source venv\Scripts\activate  # On Windows
 ```
 
-### Step 4: Install Dependencies
+### Step 5: Install Dependencies
 Install the required Python packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 5: Start Airflow Services
+### Step 6: Start Airflow Services
 If you have Docker installed, you can use the provided `docker-compose.yaml` to set up Airflow and PostgreSQL:
 ```bash
 docker-compose up -d
 ```
 
-### Step 6: Access Airflow UI
+### Step 7: Access Airflow UI
 Open your web browser and navigate to `http://localhost:8080` to access the Airflow UI. 
 Use the default credentials:
 - username: `airflow`
 - password: `airflow`
 
 
-### Step 7: PostgreSQL Setup
+### Step 8: PostgreSQL Setup
 You can connect to the PostgreSQL database using the following credentials:
 ```bash
 docker exec -it <your_postgres_container> psql -U airflow -d airflow
@@ -94,7 +101,7 @@ CREATE DATABASE weather_db;
 \l
 ``` 
 
-### Step 8: Airflow Setup Requirements
+### Step 9: Airflow Setup Requirements
 1. Create Airflow Variables
     Go to Airflow UI → Admin → Variables and add:
 
@@ -117,14 +124,14 @@ CREATE DATABASE weather_db;
     - password: `airflow`
     - port: `5432`
 
-### Step 9: Trigger the DAG
+### Step 10: Trigger the DAG
 In the Airflow UI, navigate to the "DAGs" tab, find `weather_etl_pipeline`, and click the toggle to enable it. You can also trigger it manually by clicking the "Trigger DAG" button.
 
-### Step 10: Monitor Execution
+### Step 11: Monitor Execution
 Go to Graph View
 Click tasks → View Logs to see the logs for each task.
 
-### Step 11: Stop Airflow Services
+### Step 12: Stop Airflow Services
 If you used Docker, you can stop the services with:
 ```bash
 docker-compose down

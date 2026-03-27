@@ -86,34 +86,36 @@ You can connect to the PostgreSQL database using the following credentials:
 ```bash
 docker exec -it <your_postgres_container> psql -U airflow -d airflow
 ```
+you can find your_postgres_container by running `docker ps` and looking for the container name that corresponds to PostgreSQL.
+
 Create database 'weather_db'
 ```sql
 CREATE DATABASE weather_db;
-\l -- List databases to confirm creation
+\l
 ``` 
 
 ### Step 8: Airflow Setup Requirements
 1. Create Airflow Variables
-Go to Airflow UI → Admin → Variables and add:
+    Go to Airflow UI → Admin → Variables and add:
 
-|Key | Value|
-|-------------|----------------|
-|WEATHER_API_KEY | your_api_key |
-|CITY | Bangalore |
+    |Key | Value|
+    |-------------|----------------|
+    |WEATHER_API_KEY | your_api_key |
+    |CITY | Bangalore |
 
-To get your OpenWeather API key, sign up at [OpenWeather](https://openweathermap.org/api) and create an API key.
+    To get your OpenWeather API key, sign up at [OpenWeather](https://openweathermap.org/api) and create an API key.
 
 2. Create Airflow Connections
-Go to Airflow UI → Admin → Connections and add:
-- connection_id: `weather_postgre_db`
-- connection_type: `Postgres`
-- host: `IP address of your PostgreSQL server `
-steps to find IP address of PostgreSQL server:
-    - If using Docker, run `docker ps` to find your PostgreSQL container ID, then execute `docker inspect <container_id> | findstr "IPAddress"` to get the IP address.
-- schema: `weather_db`
-- login: `airflow`
-- password: `airflow`
-- port: `5432`
+    Go to Airflow UI → Admin → Connections and add:
+    - connection_id: `weather_postgre_db`
+    - connection_type: `Postgres`
+    - host: `IP address of your PostgreSQL server `
+    steps to find IP address of PostgreSQL server:
+        - If using Docker, run `docker ps` to find your PostgreSQL container ID, then execute `docker inspect <container_id> | findstr "IPAddress"` to get the IP address.
+    - schema: `weather_db`
+    - login: `airflow`
+    - password: `airflow`
+    - port: `5432`
 
 ### Step 9: Trigger the DAG
 In the Airflow UI, navigate to the "DAGs" tab, find `weather_etl_pipeline`, and click the toggle to enable it. You can also trigger it manually by clicking the "Trigger DAG" button.
@@ -121,6 +123,12 @@ In the Airflow UI, navigate to the "DAGs" tab, find `weather_etl_pipeline`, and 
 ### Step 10: Monitor Execution
 Go to Graph View
 Click tasks → View Logs to see the logs for each task.
+
+### Step 11: Stop Airflow Services
+If you used Docker, you can stop the services with:
+```bash
+docker-compose down
+``` 
 
 ## Scheduling
 The DAG runs daily at 6:00 AM IST:
